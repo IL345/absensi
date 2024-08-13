@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+form label {
+    margin: 10px 0 5px;
+}
+
+form input, form select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #333;
+    color: #fff;
+}
+
+table td button {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table td button:hover {
+    background-color: #c82333;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+}
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absensi Karyawan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Absensi Karyawan</h1>
+    </header>
+    
+    <main>
+        <section id="form-section">
+            <h2>Catat Absensi</h2>
+            <form id="attendance-form">
+                <label for="employee-name">Nama Karyawan:</label>
+                <input type="text" id="employee-name" name="employee-name" required>
+                
+                <label for="date">Tanggal:</label>
+                <input type="date" id="date" name="date" required>
+                
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="hadir">Hadir</option>
+                    <option value="izin">Izin</option>
+                    <option value="sakit">Sakit</option>
+                </select>
+                
+                <button type="submit">Catat Absensi</button>
+            </form>
+        </section>
+        
+        <section id="list-section">
+            <h2>Daftar Absensi</h2>
+            <table id="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Nama Karyawan</th>
+                        <th>Tanggal</th>
+                        <th>Status</th>
+                        <th>Hapus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data absensi akan ditambahkan di sini -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
+    <footer>
+        <p></p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('attendance-form');
+    const tableBody = document.getElementById('attendance-table').getElementsByTagName('tbody')[0];
+    
+    // Fungsi untuk menambahkan absensi ke tabel
+    function addAttendanceToTable(name, date, status) {
+        const row = tableBody.insertRow();
+        
+        row.insertCell(0).textContent = name;
+        row.insertCell(1).textContent = date;
+        row.insertCell(2).textContent = status;
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Hapus';
+        deleteButton.addEventListener('click', () => {
+            tableBody.removeChild(row);
+        });
+        row.insertCell(3).appendChild(deleteButton);
+    }
+
+    // Menangani pengiriman formulir
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        const name = document.getElementById('employee-name').value;
+        const date = document.getElementById('date').value;
+        const status = document.getElementById('status').value;
+        
+        addAttendanceToTable(name, date, status);
+        
+        form.reset();
+    });
+});
+
+    </script>
+</body>
+</html>
